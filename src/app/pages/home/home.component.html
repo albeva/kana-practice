@@ -1,0 +1,56 @@
+<div class="container py-5">
+    <div class="text-center">
+        <h1>Practice reading Kana</h1>
+        <p class="lead text-muted">
+            Choose from options below what do you wish to practice
+        </p>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="card card-block">
+                <div class="card-body text-center">
+                    <form [formGroup]="form" (ngSubmit)="submit()">
+                        <div>
+                            <h5 class="card-title">Practice</h5>
+                            <div class="btn-group" role="group" >
+                                <label
+                                    class="btn btn-outline-dark"
+                                    formControlName="kana"
+                                    btnCheckbox
+                                    role="button">Kana</label>
+                                <label
+                                    class="btn btn-outline-dark"
+                                    formControlName="words"
+                                    btnCheckbox
+                                    role="button">Words</label>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <h5 class="card-title">Read</h5>
+                            <div class="btn-group" role="group">
+                                <label
+                                    class="btn btn-outline-dark"
+                                    formControlName="hiragana"
+                                    btnCheckbox
+                                    role="button">ひらがな</label>
+                                <label
+                                    class="btn btn-outline-dark"
+                                    formControlName="katakana"
+                                    btnCheckbox
+                                    role="button">カタカナ</label>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                                [disabled]="!form.valid">Practice!</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

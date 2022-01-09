@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="mt-5 row text-center">
+        <p class="h1">
+            <span *ngFor="let ch of game.parts" [ngClass]="ch.css">{{ ch.guess }}</span>
+        </p>
+    </div>
+
+    <div class="mt-3 row justify-content-center">
+        <div class="col-6">
+        <input
+            id="guessInput"
+            #guessInput
+            class="form-control form-control-lg shadow-none"
+            type="text"
+            [(ngModel)]="input"
+            (keyup)="update(guessInput.value)"
+            [ngClass]="{'is-invalid': invalid, 'is-valid': success}"
+            placeholder="Write in romaji"
+            autofocus>
+        </div>
+    </div>
+
+    <div class="mt-3 row justify-content-md-center fw-bold">
+        <span class="col-md-auto text-success">Correct: {{ successes }}</span>
+        <span class="col-md-auto text-danger">Failed: {{ failures }}</span>
+        <span class="col-md-auto text-primary">Best: {{ best }}</span>
+    </div>
+
+    <div class="mt-3 row justify-content-md-center">
+        <div class="col-md-auto">
+            <a routerLink="/practice" class="btn btn-outline-secondary" role="button">Cancel</a>
+        </div>
+        <div class="col-md-auto">
+            <button type="button" class="btn btn-warning" (click)="skip()">Skip</button>
+        </div>
+    </div>
+</div>

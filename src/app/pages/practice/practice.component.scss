@@ -1,0 +1,10 @@
+input#guessInput.is-valid {
+    background-color: rgba(var(--bs-success-rgb), 0.2);
+}
+
+input#guessInput.is-invalid {
+    background-color: rgba(var(--bs-danger-rgb), 0.2);
+}
+span.text-wip {
+    color: rgba(var(--bs-success-rgb), 0.5);
+}
