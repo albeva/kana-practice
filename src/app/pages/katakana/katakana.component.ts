@@ -12,7 +12,7 @@ export class KatakanaComponent {
         characters: KATAKANA,
         name: 'Katakana characters',
         cols: ['a', 'i', 'u', 'e', 'o'],
-        rows: ['', 'k', 's', 't', 'n', 'h', 'y', 'r', 'w'],
+        rows: ['', 'k', 's', 't', 'n', 'h', 'm', 'y', 'r', 'w'],
         map: {
             si: 'shi',
             ti: 'chi',
