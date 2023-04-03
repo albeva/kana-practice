@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
 
 const MODES = ['kana', 'words'];
 const READ = ['hiragana', 'katakana'];
@@ -20,9 +20,9 @@ const FORM_KEY = 'practice_form';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-    form: FormGroup;
+    form: UntypedFormGroup;
 
-    constructor(builder: FormBuilder, private router: Router) {
+    constructor(builder: UntypedFormBuilder, private router: Router) {
         this.form = builder.group(this.getInitialFormValues());
         this.form.addValidators(this.validate.bind(this));
         this.form.valueChanges.subscribe(values => {
