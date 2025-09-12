@@ -76,9 +76,7 @@ export class PracticeComponent implements OnInit {
 
     @HostListener('window:focus')
     onWindowFocus() {
-        setTimeout(() => {
-            this.guessInputEl.nativeElement.focus();
-        });
+        this.focus();
     }
 
     skip() {
@@ -191,7 +189,7 @@ export class PracticeComponent implements OnInit {
         }
 
         setTimeout(() => {
-            this.guessInputEl.nativeElement.focus();
+            this.focus();
         });
     }
 
@@ -213,9 +211,9 @@ export class PracticeComponent implements OnInit {
     }
 
     private getRandomWord(read: CharacterSet): PracticeRound {
-        const words =
-            read == CharacterSet.Hiragana ? WORDS_HIRAGANA : WORDS_KATAKANA;
+        const words = read == CharacterSet.Hiragana ? WORDS_HIRAGANA : WORDS_KATAKANA;
         const word = words.randomElement();
+
         if (word === this.previous) {
             return this.getRandomWord(read);
         }
@@ -226,39 +224,50 @@ export class PracticeComponent implements OnInit {
 
         const len = word.length;
         for (let pos = 0; pos < len; pos++) {
+            const nextCh = () => pos + 1 < len ? word[pos + 1] : '';
+
             let ch = word[pos];
             let guess = ch;
-            let nch = pos + 1 < len ? word[pos + 1] : '';
 
             let prefix = false;
             let suffix = false;
-            if (COMBO.indexOf(nch) !== -1) {
-                pos += 1;
-                ch += nch;
-                guess += nch;
-                nch = pos + 1 < len ? word[pos + 1] : '';
-            }
 
-            if (nch === 'ー') {
-                pos += 1;
-                suffix = true;
-                guess += nch;
-            } else if (ch === 'っ' || ch === 'ッ') {
-                pos += 1;
-                ch = nch;
-                prefix = true;
-                guess += nch;
+            while(true) {
+                let nch = nextCh();
+                if (COMBO.indexOf(nch) !== -1) {
+                    pos += 1;
+                    ch += nch;
+                    guess += nch;
+                    continue;
+                }
+                if (ch === 'っ' || ch === 'ッ') {
+                    pos += 1;
+                    ch = nch;
+                    prefix = true;
+                    guess += nch;
+                    continue;
+                }
+                if (nch === 'ー') {
+                    pos += 1;
+                    suffix = true;
+                    guess += nch;
+                    continue;
+                }
+                break;
             }
 
             const idx = set.indexOf(ch);
             if (idx === -1) {
+                console.error('Not found for ' + ch);
                 throw 'Not found for ' + ch;
             }
 
             let romaji = ROMAJI[idx];
             if (prefix) {
                 romaji = romaji[0] + romaji;
-            } else if (suffix) {
+            }
+
+            if (suffix) {
                 romaji += romaji[romaji.length - 1];
             }
 
@@ -271,5 +280,9 @@ export class PracticeComponent implements OnInit {
         }
 
         return { word: true, guess: word, expected, parts };
+    }
+
+    private focus() {
+        this.guessInputEl.nativeElement.focus();
     }
 }
