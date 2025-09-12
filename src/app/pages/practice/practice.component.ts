@@ -26,7 +26,10 @@ type CharResult = { char: string; partial: boolean };
 
 const KEY_BEST_SCORE = 'bestScore';
 
-const COMBO = ['ゃ', 'ゅ', 'ょ', 'ャ', 'ュ', 'ョ'];
+const COMBO = [
+    'ゃ', 'ゅ', 'ょ', 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ',
+    'ャ', 'ュ', 'ョ', 'ァ', 'ィ', 'ゥ', 'ェ', 'ォ'
+];
 
 @Component({
     selector: 'app-practice',
@@ -204,7 +207,7 @@ export class PracticeComponent implements OnInit {
         for (let pos = 0; pos < len; pos++) {
             let ch = word[pos];
             let guess = ch;
-            const nch = pos + 1 < len ? word[pos + 1] : '';
+            let nch = pos + 1 < len ? word[pos + 1] : '';
 
             let prefix = false;
             let suffix = false;
@@ -212,11 +215,14 @@ export class PracticeComponent implements OnInit {
                 pos += 1;
                 ch += nch;
                 guess += nch;
-            } else if (nch === 'ー') {
+                nch = pos + 1 < len ? word[pos + 1] : '';
+            }
+
+            if (nch === 'ー') {
                 pos += 1;
                 suffix = true;
                 guess += nch;
-            } else if (ch === 'っ') {
+            } else if (ch === 'っ' || ch === 'ッ') {
                 pos += 1;
                 ch = nch;
                 prefix = true;
