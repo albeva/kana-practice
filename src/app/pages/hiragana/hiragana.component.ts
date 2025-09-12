@@ -5,7 +5,8 @@ import { HIRAGANA } from '@app/kana/kana';
 @Component({
     selector: 'app-hiragana',
     templateUrl: './hiragana.component.html',
-    styleUrls: ['./hiragana.component.scss']
+    styleUrls: ['./hiragana.component.scss'],
+    standalone: false
 })
 export class HiraganaComponent {
     hiragana: KanaTableTemplate = {

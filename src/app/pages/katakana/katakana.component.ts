@@ -5,7 +5,8 @@ import { KATAKANA } from '@app/kana/kana';
 @Component({
     selector: 'app-katakana',
     templateUrl: './katakana.component.html',
-    styleUrls: ['./katakana.component.scss']
+    styleUrls: ['./katakana.component.scss'],
+    standalone: false
 })
 export class KatakanaComponent {
     hiragana: KanaTableTemplate = {

@@ -30,7 +30,8 @@ const COMBO = ['ゃ', 'ゅ', 'ょ', 'ャ', 'ュ', 'ョ'];
 @Component({
     selector: 'app-practice',
     templateUrl: './practice.component.html',
-    styleUrls: ['./practice.component.scss']
+    styleUrls: ['./practice.component.scss'],
+    standalone: false
 })
 export class PracticeComponent implements OnInit {
     @ViewChild('guessInput') guessInputEl!: ElementRef;

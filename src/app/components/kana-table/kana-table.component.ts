@@ -12,7 +12,8 @@ export interface KanaTableTemplate {
 @Component({
     selector: 'kana-table',
     templateUrl: './kana-table.component.html',
-    styleUrls: ['./kana-table.component.scss']
+    styleUrls: ['./kana-table.component.scss'],
+    standalone: false
 })
 export class KanaTableComponent {
     @Input('template') template!: KanaTableTemplate
