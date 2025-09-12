@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { KANA, CharacterSet, ROMAJI, HIRAGANA, KATAKANA } from '@app/kana/kana';
 import { WORDS_HIRAGANA } from '@app/kana/words_hiragana';
@@ -27,8 +27,22 @@ type CharResult = { char: string; partial: boolean };
 const KEY_BEST_SCORE = 'bestScore';
 
 const COMBO = [
-    'ゃ', 'ゅ', 'ょ', 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ',
-    'ャ', 'ュ', 'ョ', 'ァ', 'ィ', 'ゥ', 'ェ', 'ォ'
+    'ゃ',
+    'ゅ',
+    'ょ',
+    'ぁ',
+    'ぃ',
+    'ぅ',
+    'ぇ',
+    'ぉ',
+    'ャ',
+    'ュ',
+    'ョ',
+    'ァ',
+    'ィ',
+    'ゥ',
+    'ェ',
+    'ォ',
 ];
 
 @Component({
@@ -58,6 +72,13 @@ export class PracticeComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.params.subscribe(this.reset.bind(this));
+    }
+
+    @HostListener('window:focus')
+    onWindowFocus() {
+        setTimeout(() => {
+            this.guessInputEl.nativeElement.focus();
+        });
     }
 
     skip() {
