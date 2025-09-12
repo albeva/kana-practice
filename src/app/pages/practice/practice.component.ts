@@ -196,6 +196,9 @@ export class PracticeComponent implements OnInit {
     private getRandomKana(read: CharacterSet): PracticeRound {
         const kana = KANA.randomElement();
         const guess = kana[read];
+        if (!guess) {
+            return this.getRandomKana(read);
+        }
         const expected = kana[CharacterSet.Romaji];
 
         if (guess === null || expected === null || this.previous === guess) {

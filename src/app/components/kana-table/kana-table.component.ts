@@ -23,8 +23,12 @@ export class KanaTableComponent {
         if (index === undefined) {
             return '';
         }
-        const kana = KANA[index];
 
+        if (!this.template.characters[index]) {
+            return '';
+        }
+
+        const kana = KANA[index];
         if (kana.length === 4) {
             return kana[0] + ' / ' + kana[3];
         } else {
