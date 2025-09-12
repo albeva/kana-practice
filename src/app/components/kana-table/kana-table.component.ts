@@ -3,7 +3,7 @@ import { KANA, ROMAJI } from '@app/kana/kana';
 
 export interface KanaTableTemplate {
     characters: string[];
-    name: string,
+    name: string;
     cols: string[];
     rows: string[];
     map: any;
@@ -13,15 +13,15 @@ export interface KanaTableTemplate {
     selector: 'kana-table',
     templateUrl: './kana-table.component.html',
     styleUrls: ['./kana-table.component.scss'],
-    standalone: false
+    standalone: false,
 })
 export class KanaTableComponent {
-    @Input('template') template!: KanaTableTemplate
+    @Input('template') template!: KanaTableTemplate;
 
     romaji(col: string, row: string): string {
         const index = this.find(col, row);
         if (index === undefined) {
-            return "";
+            return '';
         }
         const kana = KANA[index];
 
@@ -35,12 +35,12 @@ export class KanaTableComponent {
     kana(col: string, row: string): string {
         const index = this.find(col, row);
         if (index === undefined) {
-            return "";
+            return '';
         }
         return this.template.characters[index] ?? '';
     }
 
-    private find(col: string, row: string): number|undefined {
+    private find(col: string, row: string): number | undefined {
         let romaji = row + col;
         if (romaji in this.template.map) {
             romaji = (this.template.map as any)[romaji] as string;

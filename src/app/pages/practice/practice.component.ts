@@ -6,7 +6,7 @@ import { WORDS_KATAKANA } from '@app/kana/words_katakana';
 
 const enum Mode {
     Kana = 0,
-    Words = 1
+    Words = 1,
 }
 
 interface CharacterState {
@@ -16,12 +16,13 @@ interface CharacterState {
 }
 
 interface PracticeRound {
+    word: boolean;
     guess: string;
-    parts: CharacterState[]
+    parts: CharacterState[];
     expected: string;
 }
 
-type CharResult = {char: string, partial: boolean};
+type CharResult = { char: string; partial: boolean };
 
 const KEY_BEST_SCORE = 'bestScore';
 
@@ -31,7 +32,7 @@ const COMBO = ['ゃ', 'ゅ', 'ょ', 'ャ', 'ュ', 'ョ'];
     selector: 'app-practice',
     templateUrl: './practice.component.html',
     styleUrls: ['./practice.component.scss'],
-    standalone: false
+    standalone: false,
 })
 export class PracticeComponent implements OnInit {
     @ViewChild('guessInput') guessInputEl!: ElementRef;
@@ -120,13 +121,21 @@ export class PracticeComponent implements OnInit {
     private reset(params: Params) {
         this.read = [];
         const read = params['read'].split(',');
-        if (read.indexOf('hiragana') != -1) { this.read.push(CharacterSet.Hiragana); }
-        if (read.indexOf('katakana') != -1) { this.read.push(CharacterSet.Katakana); }
+        if (read.indexOf('hiragana') != -1) {
+            this.read.push(CharacterSet.Hiragana);
+        }
+        if (read.indexOf('katakana') != -1) {
+            this.read.push(CharacterSet.Katakana);
+        }
 
         this.modes = [];
         const modes = params['mode'].split(',');
-        if (modes.indexOf('kana') != -1) { this.modes.push(Mode.Kana); }
-        if (modes.indexOf('words') != -1) { this.modes.push(Mode.Words); }
+        if (modes.indexOf('kana') != -1) {
+            this.modes.push(Mode.Kana);
+        }
+        if (modes.indexOf('words') != -1) {
+            this.modes.push(Mode.Words);
+        }
 
         this.failures = 0;
         this.successes = 0;
@@ -172,16 +181,16 @@ export class PracticeComponent implements OnInit {
         }
 
         return {
+            word: false,
             guess,
             expected,
-            parts: [
-                {guess: guess, expect: expected, css: 'text-muted'}
-            ]
+            parts: [{ guess: guess, expect: expected, css: 'text-muted' }],
         };
     }
 
     private getRandomWord(read: CharacterSet): PracticeRound {
-        const words = read == CharacterSet.Hiragana ? WORDS_HIRAGANA : WORDS_KATAKANA;
+        const words =
+            read == CharacterSet.Hiragana ? WORDS_HIRAGANA : WORDS_KATAKANA;
         const word = words.randomElement();
         if (word === this.previous) {
             return this.getRandomWord(read);
@@ -216,7 +225,7 @@ export class PracticeComponent implements OnInit {
 
             const idx = set.indexOf(ch);
             if (idx === -1) {
-                throw "Not found for " + ch;
+                throw 'Not found for ' + ch;
             }
 
             let romaji = ROMAJI[idx];
@@ -230,10 +239,10 @@ export class PracticeComponent implements OnInit {
             parts.push({
                 guess,
                 expect: romaji,
-                css: 'text-muted'
+                css: 'text-muted',
             });
         }
 
-        return {guess: word, expected, parts}
+        return { word: true, guess: word, expected, parts };
     }
 }

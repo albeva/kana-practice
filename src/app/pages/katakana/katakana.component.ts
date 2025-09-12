@@ -6,7 +6,7 @@ import { KATAKANA } from '@app/kana/kana';
     selector: 'app-katakana',
     templateUrl: './katakana.component.html',
     styleUrls: ['./katakana.component.scss'],
-    standalone: false
+    standalone: false,
 })
 export class KatakanaComponent {
     hiragana: KanaTableTemplate = {
@@ -18,9 +18,9 @@ export class KatakanaComponent {
             si: 'shi',
             ti: 'chi',
             tu: 'tsu',
-            hu: 'fu'
-        }
-    }
+            hu: 'fu',
+        },
+    };
 
     diacritical: KanaTableTemplate = {
         characters: KATAKANA,
@@ -30,15 +30,28 @@ export class KatakanaComponent {
         map: {
             zi: 'ji',
             di: 'dji',
-            du: 'dzu'
-        }
-    }
+            du: 'dzu',
+        },
+    };
 
     combos: KanaTableTemplate = {
         characters: KATAKANA,
         name: 'Katakana combos',
         cols: ['a', 'u', 'o'],
-        rows: ['ky', 'sh', 'ch', 'ny', 'hy', 'my', 'ry', 'gy', 'j', 'dj', 'by', 'py'],
-        map: { }
-    }
+        rows: [
+            'ky',
+            'sh',
+            'ch',
+            'ny',
+            'hy',
+            'my',
+            'ry',
+            'gy',
+            'j',
+            'dj',
+            'by',
+            'py',
+        ],
+        map: {},
+    };
 }

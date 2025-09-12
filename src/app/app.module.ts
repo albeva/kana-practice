@@ -21,16 +21,16 @@ import { KanaTableComponent } from './components/kana-table/kana-table.component
         HomeComponent,
         HiraganaComponent,
         KatakanaComponent,
-        KanaTableComponent
+        KanaTableComponent,
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         ReactiveFormsModule,
         FormsModule,
-        ButtonsModule
+        ButtonsModule,
     ],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

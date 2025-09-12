@@ -3,16 +3,22 @@
     <thead>
         <tr>
             <th scope="col">&nbsp;</th>
-            <th *ngFor="let col of template.cols" scope="col" [ngStyle]="{width: (90 / (template.cols.length)) + '%'}">{{ col }}</th>
+            @for (col of template.cols; track $index) {
+                <th scope="col" [ngStyle]="{width: (90 / (template.cols.length)) + '%'}">{{ col }}</th>
+            }
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let row of template.rows">
-            <th scope="row">{{ row }}</th>
-            <td *ngFor="let col of template.cols">
-                <strong class="fs-5">{{ kana(col, row) }}</strong>
-                <div class="text-muted">{{ romaji(col, row) }}</div>
-            </td>
-        </tr>
+        @for (row of template.rows; track $index) {
+            <tr>
+                <th scope="row">{{ row }}</th>
+                @for (col of template.cols; track $index) {
+                    <td>
+                        <strong class="fs-5">{{ kana(col, row) }}</strong>
+                        <div class="text-muted">{{ romaji(col, row) }}</div>
+                    </td>
+                }
+            </tr>
+        }
     </tbody>
 </table>

@@ -6,7 +6,7 @@ import { HIRAGANA } from '@app/kana/kana';
     selector: 'app-hiragana',
     templateUrl: './hiragana.component.html',
     styleUrls: ['./hiragana.component.scss'],
-    standalone: false
+    standalone: false,
 })
 export class HiraganaComponent {
     hiragana: KanaTableTemplate = {
@@ -18,9 +18,9 @@ export class HiraganaComponent {
             si: 'shi',
             ti: 'chi',
             tu: 'tsu',
-            hu: 'fu'
-        }
-    }
+            hu: 'fu',
+        },
+    };
 
     diacritical: KanaTableTemplate = {
         characters: HIRAGANA,
@@ -30,15 +30,28 @@ export class HiraganaComponent {
         map: {
             zi: 'ji',
             di: 'dji',
-            du: 'dzu'
-        }
-    }
+            du: 'dzu',
+        },
+    };
 
     combos: KanaTableTemplate = {
         characters: HIRAGANA,
         name: 'Hiragana combos',
         cols: ['a', 'u', 'o'],
-        rows: ['ky', 'sh', 'ch', 'ny', 'hy', 'my', 'ry', 'gy', 'j', 'dj', 'by', 'py'],
-        map: { }
-    }
+        rows: [
+            'ky',
+            'sh',
+            'ch',
+            'ny',
+            'hy',
+            'my',
+            'ry',
+            'gy',
+            'j',
+            'dj',
+            'by',
+            'py',
+        ],
+        map: {},
+    };
 }
