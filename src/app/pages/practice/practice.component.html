@@ -28,6 +28,10 @@
                 (keyup)="update(guessInput.value)"
                 [ngClass]="{'is-invalid': invalid, 'is-valid': success}"
                 placeholder="Write in romaji"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
                 autofocus>
         </div>
     </div>
