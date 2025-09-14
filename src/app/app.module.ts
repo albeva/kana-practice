@@ -16,6 +16,7 @@ import {
     getAnalytics,
     provideAnalytics,
     ScreenTrackingService,
+    UserTrackingService
 } from '@angular/fire/analytics';
 
 import { environment } from '../environments/environment';
@@ -34,6 +35,7 @@ import { environment } from '../environments/environment';
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideAnalytics(() => getAnalytics()),
         ScreenTrackingService,
+        UserTrackingService
     ],
     bootstrap: [AppComponent],
 })
