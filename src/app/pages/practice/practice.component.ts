@@ -2,11 +2,11 @@ import {
     Component,
     ElementRef,
     HostListener,
-    OnInit,
     ViewChild,
     ChangeDetectorRef,
+    effect,
+    input
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
 import {
     CharacterSet,
     KANA,
@@ -46,30 +46,38 @@ const KEY_BEST_SCORE = 'bestScore';
     styleUrls: ['./practice.component.scss'],
     standalone: false,
 })
-export class PracticeComponent implements OnInit {
+export class PracticeComponent {
+    // The input element for typing guesses.
     @ViewChild('guessInput', { static: true }) guessInputEl!: ElementRef;
 
+    // The route parameters.
+    modeParams = input<string>('', {alias: 'mode'});
+    readParams = input<string>('', {alias: 'read'});
+
+    // The current guessing mode and character sets.
     read!: CharacterSet[];
     modes!: Mode[];
     game!: PracticeRound;
     previous?: string;
-    input = '';
 
+    // The current state of the guess.
+    input = '';
     invalid = false;
     disabled = false;
     failed = false;
     success = false;
+
+    // The score statistics.
     failures = 0;
     successes = 0;
     best = 0;
 
-    constructor(
-        private route: ActivatedRoute,
-        private cdr: ChangeDetectorRef
-    ) {}
-
-    ngOnInit(): void {
-        this.route.params.subscribe(this.reset.bind(this));
+    constructor(private cdr: ChangeDetectorRef) {
+        effect(() => {
+            const mode = this.modeParams() || '';
+            const read = this.readParams() || '';
+            this.reset({ mode, read });
+        });
     }
 
     @HostListener('window:focus')
@@ -140,7 +148,7 @@ export class PracticeComponent implements OnInit {
         }
     }
 
-    private reset(params: Params) {
+    private reset(params: Record<string, string>) {
         this.read = [];
         const read = params['read'].split(',');
         if (read.indexOf('hiragana') != -1) {
