@@ -73,11 +73,7 @@ export class PracticeComponent {
     best = 0;
 
     constructor(private cdr: ChangeDetectorRef) {
-        effect(() => {
-            const mode = this.modeParams() || '';
-            const read = this.readParams() || '';
-            this.reset({ mode, read });
-        });
+        effect(this.reset.bind(this));
     }
 
     @HostListener('window:focus')
@@ -148,9 +144,9 @@ export class PracticeComponent {
         }
     }
 
-    private reset(params: Record<string, string>) {
+    private reset() {
         this.read = [];
-        const read = params['read'].split(',');
+        const read = this.readParams().split(',');
         if (read.indexOf('hiragana') != -1) {
             this.read.push(CharacterSet.Hiragana);
         }
@@ -159,7 +155,7 @@ export class PracticeComponent {
         }
 
         this.modes = [];
-        const modes = params['mode'].split(',');
+        const modes = this.modeParams().split(',');
         if (modes.indexOf('kana') != -1) {
             this.modes.push(Mode.Kana);
         }
