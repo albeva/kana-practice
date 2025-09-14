@@ -1,0 +1,5 @@
+button.no-hover:hover:not(.active) {
+    background-color: inherit !important;
+    color: inherit !important;
+    border-color: inherit !important;
+}

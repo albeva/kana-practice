@@ -9,36 +9,37 @@
         <div class="col-md-4">
             <div class="card card-block">
                 <div class="card-body text-center">
-                    <form [formGroup]="form" (ngSubmit)="submit()">
+                    <form (ngSubmit)="submit()">
+                        @let s = state();
                         <div>
                             <h5 class="card-title">Practice</h5>
                             <div class="btn-group" role="group" >
-                                <label
-                                    class="btn btn-outline-dark"
-                                    formControlName="kana"
-                                    btnCheckbox
-                                    role="button">Kana</label>
-                                <label
-                                    class="btn btn-outline-dark"
-                                    formControlName="words"
-                                    btnCheckbox
-                                    role="button">Words</label>
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-dark no-hover"
+                                    [class.active]="s.kana"
+                                    (click)="toggle('kana')">Kana</button>
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-dark no-hover"
+                                    [class.active]="s.words"
+                                    (click)="toggle('words')">Words</button>
                             </div>
                         </div>
 
                         <div class="mt-3">
                             <h5 class="card-title">Read</h5>
                             <div class="btn-group" role="group">
-                                <label
-                                    class="btn btn-outline-dark"
-                                    formControlName="hiragana"
-                                    btnCheckbox
-                                    role="button">ひらがな</label>
-                                <label
-                                    class="btn btn-outline-dark"
-                                    formControlName="katakana"
-                                    btnCheckbox
-                                    role="button">カタカナ</label>
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-dark no-hover"
+                                    [class.active]="s.hiragana"
+                                    (click)="toggle('hiragana')">ひらがな</button>
+                               <button
+                                    type="button"
+                                    class="btn btn-outline-dark no-hover"
+                                    [class.active]="s.katakana"
+                                    (click)="toggle('katakana')">カタカナ</button>
                             </div>
                         </div>
 
@@ -46,7 +47,7 @@
                             <button
                                 type="submit"
                                 class="btn btn-primary"
-                                [disabled]="!form.valid">Practice!</button>
+                                [disabled]="!isValid()">Practice!</button>
                         </div>
                     </form>
                 </div>

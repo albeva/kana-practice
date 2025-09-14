@@ -1,16 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, signal, effect } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-    UntypedFormBuilder,
-    UntypedFormGroup,
-    AbstractControl,
-    ValidationErrors,
-} from '@angular/forms';
 
-const MODES = ['kana', 'words'];
-const READ = ['hiragana', 'katakana'];
+interface State {
+    kana: boolean;
+    words: boolean;
+    hiragana: boolean;
+    katakana: boolean;
+}
 
-const DEFAULTS = {
+const DEFAULTS: State = {
     kana: true,
     words: false,
     hiragana: true,
@@ -26,51 +24,43 @@ const FORM_KEY = 'practice_form';
     standalone: false,
 })
 export class HomeComponent {
-    form: UntypedFormGroup;
+    state = signal<State>(DEFAULTS);
 
-    constructor(builder: UntypedFormBuilder, private router: Router) {
-        this.form = builder.group(this.getInitialFormValues());
-        this.form.addValidators(this.validate.bind(this));
-        this.form.valueChanges.subscribe((values) => {
-            localStorage.setItem(FORM_KEY, JSON.stringify(values));
+    constructor(private router: Router) {
+        const saved = this.getSavedState();
+        if (saved) {
+            this.state.set(saved);
+        }
+
+        effect(() => {
+            localStorage.setItem(FORM_KEY, JSON.stringify(this.state()));
         });
     }
 
     submit() {
-        this.router.navigate([
-            '/practice',
-            this.flatten(MODES),
-            this.flatten(READ),
-        ]);
+        if (!this.isValid()) {
+            return;
+        }
+
+        const state = this.state();
+        const flatten = (...keys: (keyof State)[]): string => {
+            return keys.filter(k => state[k]).join(',');
+        };
+
+        this.router.navigate(['/practice', flatten('kana', 'words') , flatten('hiragana', 'katakana')]);
     }
 
-    private getInitialFormValues(): any {
+    toggle(key: keyof State) {
+        this.state.update(s => ({ ...s, [key]: !s[key] }));
+    }
+
+    isValid(): boolean {
+        const state = this.state();
+        return (state.kana || state.words) && (state.hiragana || state.katakana);
+    }
+
+    private getSavedState(): State | undefined {
         let existing = localStorage.getItem(FORM_KEY);
-        return existing !== null ? JSON.parse(existing) : DEFAULTS;
-    }
-
-    private validate(control: AbstractControl): ValidationErrors | null {
-        let mode = this.isAnySelected(MODES);
-        let read = this.isAnySelected(READ);
-        return mode && read ? null : { src: 'missing' };
-    }
-
-    private flatten(opts: string[]): string {
-        let results: string[] = [];
-        for (const key of opts) {
-            if (this.form.value[key] === true) {
-                results.push(key);
-            }
-        }
-        return results.join(',');
-    }
-
-    private isAnySelected(opts: string[]): boolean {
-        for (const key of opts) {
-            if (this.form.value[key] === true) {
-                return true;
-            }
-        }
-        return false;
+        return existing !== null ? JSON.parse(existing) : undefined;
     }
 }
