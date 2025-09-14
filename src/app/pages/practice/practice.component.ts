@@ -5,7 +5,7 @@ import {
     ViewChild,
     ChangeDetectorRef,
     effect,
-    input
+    input,
 } from '@angular/core';
 import {
     CharacterSet,
@@ -51,8 +51,8 @@ export class PracticeComponent {
     @ViewChild('guessInput', { static: true }) guessInputEl!: ElementRef;
 
     // The route parameters.
-    modeParams = input<string>('', {alias: 'mode'});
-    readParams = input<string>('', {alias: 'read'});
+    modeParams = input<string>('', { alias: 'mode' });
+    readParams = input<string>('', { alias: 'read' });
 
     // The current guessing mode and character sets.
     read!: CharacterSet[];
