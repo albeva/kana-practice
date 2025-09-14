@@ -10,19 +10,18 @@
             <div class="card card-block">
                 <div class="card-body text-center">
                     <form (ngSubmit)="submit()">
-                        @let s = state();
                         <div>
                             <h5 class="card-title">Practice</h5>
                             <div class="btn-group" role="group" >
                                 <button
                                     type="button"
                                     class="btn btn-outline-dark no-hover"
-                                    [class.active]="s.kana"
+                                    [class.active]="state.kana"
                                     (click)="toggle('kana')">Kana</button>
                                 <button
                                     type="button"
                                     class="btn btn-outline-dark no-hover"
-                                    [class.active]="s.words"
+                                    [class.active]="state.words"
                                     (click)="toggle('words')">Words</button>
                             </div>
                         </div>
@@ -33,12 +32,12 @@
                                 <button
                                     type="button"
                                     class="btn btn-outline-dark no-hover"
-                                    [class.active]="s.hiragana"
+                                    [class.active]="state.hiragana"
                                     (click)="toggle('hiragana')">ひらがな</button>
                                <button
                                     type="button"
                                     class="btn btn-outline-dark no-hover"
-                                    [class.active]="s.katakana"
+                                    [class.active]="state.katakana"
                                     (click)="toggle('katakana')">カタカナ</button>
                             </div>
                         </div>
