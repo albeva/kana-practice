@@ -154,6 +154,11 @@ export const KANA = [
     ['dye', '',    'ヂェ']
 ];
 
+export const COMBO = [
+    'ゃ', 'ゅ', 'ょ', 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ',
+    'ャ', 'ュ', 'ョ', 'ァ', 'ィ', 'ゥ', 'ェ', 'ォ',
+];
+
 export const enum CharacterSet {
     Romaji = 0,
     Hiragana = 1,

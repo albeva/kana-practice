@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkkana_practice=self.webpackChunkkana_practice||[]).push([[461],{50:()=>{}},a=>{a(a.s=50)}]);

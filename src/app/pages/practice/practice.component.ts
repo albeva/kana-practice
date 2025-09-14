@@ -1,6 +1,20 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    HostListener,
+    OnInit,
+    ViewChild,
+    ChangeDetectorRef,
+} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { KANA, CharacterSet, ROMAJI, HIRAGANA, KATAKANA } from '@app/kana/kana';
+import {
+    CharacterSet,
+    KANA,
+    COMBO,
+    ROMAJI,
+    HIRAGANA,
+    KATAKANA,
+} from '@app/kana/kana';
 import { WORDS_HIRAGANA } from '@app/kana/words_hiragana';
 import { WORDS_KATAKANA } from '@app/kana/words_katakana';
 
@@ -26,25 +40,6 @@ type CharResult = { char: string; partial: boolean };
 
 const KEY_BEST_SCORE = 'bestScore';
 
-const COMBO = [
-    'ゃ',
-    'ゅ',
-    'ょ',
-    'ぁ',
-    'ぃ',
-    'ぅ',
-    'ぇ',
-    'ぉ',
-    'ャ',
-    'ュ',
-    'ョ',
-    'ァ',
-    'ィ',
-    'ゥ',
-    'ェ',
-    'ォ',
-];
-
 @Component({
     selector: 'app-practice',
     templateUrl: './practice.component.html',
@@ -52,7 +47,7 @@ const COMBO = [
     standalone: false,
 })
 export class PracticeComponent implements OnInit {
-    @ViewChild('guessInput') guessInputEl!: ElementRef;
+    @ViewChild('guessInput', { static: true }) guessInputEl!: ElementRef;
 
     read!: CharacterSet[];
     modes!: Mode[];
@@ -68,15 +63,18 @@ export class PracticeComponent implements OnInit {
     successes = 0;
     best = 0;
 
-    constructor(private route: ActivatedRoute) {}
+    constructor(
+        private route: ActivatedRoute,
+        private cdr: ChangeDetectorRef
+    ) {}
 
     ngOnInit(): void {
         this.route.params.subscribe(this.reset.bind(this));
     }
 
     @HostListener('window:focus')
-    onWindowFocus() {
-        this.focus();
+    private focus() {
+        this.guessInputEl.nativeElement.focus();
     }
 
     skip() {
@@ -134,8 +132,10 @@ export class PracticeComponent implements OnInit {
             }
             this.disabled = true;
             this.success = true;
+
             setTimeout(() => {
                 this.next();
+                this.cdr.markForCheck();
             }, 500);
         }
     }
@@ -188,9 +188,7 @@ export class PracticeComponent implements OnInit {
                 break;
         }
 
-        setTimeout(() => {
-            this.focus();
-        });
+        this.focus();
     }
 
     private getRandomKana(read: CharacterSet): PracticeRound {
@@ -214,7 +212,8 @@ export class PracticeComponent implements OnInit {
     }
 
     private getRandomWord(read: CharacterSet): PracticeRound {
-        const words = read == CharacterSet.Hiragana ? WORDS_HIRAGANA : WORDS_KATAKANA;
+        const words =
+            read == CharacterSet.Hiragana ? WORDS_HIRAGANA : WORDS_KATAKANA;
         const word = words.randomElement();
 
         if (word === this.previous) {
@@ -227,7 +226,7 @@ export class PracticeComponent implements OnInit {
 
         const len = word.length;
         for (let pos = 0; pos < len; pos++) {
-            const nextCh = () => pos + 1 < len ? word[pos + 1] : '';
+            const nextCh = () => (pos + 1 < len ? word[pos + 1] : '');
 
             let ch = word[pos];
             let guess = ch;
@@ -235,7 +234,7 @@ export class PracticeComponent implements OnInit {
             let prefix = false;
             let suffix = false;
 
-            while(true) {
+            while (true) {
                 let nch = nextCh();
                 if (COMBO.indexOf(nch) !== -1) {
                     pos += 1;
@@ -283,9 +282,5 @@ export class PracticeComponent implements OnInit {
         }
 
         return { word: true, guess: word, expected, parts };
-    }
-
-    private focus() {
-        this.guessInputEl.nativeElement.focus();
     }
 }
