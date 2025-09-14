@@ -25,7 +25,7 @@
                 class="form-control form-control-lg shadow-none"
                 type="text"
                 [(ngModel)]="input"
-                (keyup)="update(guessInput.value)"
+                (ngModelChange)="update()"
                 [ngClass]="{'is-invalid': invalid, 'is-valid': success}"
                 placeholder="Write in romaji"
                 autocomplete="off"

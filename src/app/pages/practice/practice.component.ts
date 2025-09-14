@@ -88,13 +88,13 @@ export class PracticeComponent {
         this.next();
     }
 
-    update(input: string) {
+    update() {
         if (this.disabled) {
             return;
         }
         const parts = this.game.parts;
 
-        input = input.toLowerCase();
+        const input = this.input.toLowerCase().trim();
         let start = 0;
         let failed = false;
 
