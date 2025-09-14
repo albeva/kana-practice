@@ -20,10 +20,14 @@ export class AppComponent {
         dark: 'bi-moon',
     };
 
-    private readonly mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    private readonly mediaQuery = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+    );
 
-    constructor() {;
-        this.setTheme(localStorage.getItem(AppComponent.THEME_KEY) as Theme ?? 'auto');
+    constructor() {
+        this.setTheme(
+            (localStorage.getItem(AppComponent.THEME_KEY) as Theme) ?? 'auto'
+        );
         this.mediaQuery.addEventListener('change', () => {
             this.updateTheme();
         });
@@ -36,15 +40,10 @@ export class AppComponent {
     setTheme(theme: Theme) {
         this.theme = theme;
         localStorage.setItem(AppComponent.THEME_KEY, theme);
-
-        if (theme === 'auto') {
-            document.documentElement.setAttribute(
-                'data-bs-theme',
-                this.systemTheme()
-            );
-        } else {
-            document.documentElement.setAttribute('data-bs-theme', theme);
-        }
+        document.documentElement.setAttribute(
+            'data-bs-theme',
+            theme === 'auto' ? this.systemTheme() : theme
+        );
     }
 
     private systemTheme(): Theme {
