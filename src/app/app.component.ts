@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+type Theme = 'light' | 'dark' | 'auto';
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -9,20 +11,32 @@ import { Component } from '@angular/core';
 export class AppComponent {
     title = 'kana-practice';
 
-    private mode = window.matchMedia('(prefers-color-scheme: dark)');
+    private static readonly THEME_KEY = 'theme';
 
-    constructor() {
-        this.updateTheme();
-        this.mode.addEventListener('change', () => {
+    theme: Theme = 'auto';
+    readonly icons = {
+        auto: 'bi-circle-half',
+        light: 'bi-brightness-high',
+        dark: 'bi-moon',
+    };
+
+    private readonly mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    constructor() {;
+        this.setTheme(localStorage.getItem(AppComponent.THEME_KEY) as Theme ?? 'auto');
+        this.mediaQuery.addEventListener('change', () => {
             this.updateTheme();
         });
     }
 
     private updateTheme() {
-        this.setTheme('auto');
+        this.setTheme(this.theme);
     }
 
-    private setTheme(theme: string) {
+    setTheme(theme: Theme) {
+        this.theme = theme;
+        localStorage.setItem(AppComponent.THEME_KEY, theme);
+
         if (theme === 'auto') {
             document.documentElement.setAttribute(
                 'data-bs-theme',
@@ -33,7 +47,7 @@ export class AppComponent {
         }
     }
 
-    private systemTheme() {
-        return this.mode.matches ? 'dark' : 'light';
+    private systemTheme(): Theme {
+        return this.mediaQuery.matches ? 'dark' : 'light';
     }
 }

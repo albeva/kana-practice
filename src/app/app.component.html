@@ -20,6 +20,16 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <button class="nav-link dropdown-toggle" id="themeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi {{ icons[theme] }}"></i> Theme
+                        </button>
+                        <ul id="theme-menu" class="dropdown-menu dropdown-menu-end" aria-labelledby="themeDropdown">
+                            <li><button class="dropdown-item" [class.active]="theme == 'auto'" (click)="setTheme('auto')"><i class="bi {{ icons['auto'] }}"></i> Auto</button></li>
+                            <li><button class="dropdown-item" [class.active]="theme == 'light'" (click)="setTheme('light')"><i class="bi {{ icons['light'] }}"></i> Light</button></li>
+                            <li><button class="dropdown-item" [class.active]="theme == 'dark'" (click)="setTheme('dark')"><i class="bi {{ icons['dark'] }}"></i> Dark</button></li>
+                        </ul>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="https://github.com/albeva/kana-practice" target="_blank">
                             <i class="bi bi-github"></i> Fork on GitHub
