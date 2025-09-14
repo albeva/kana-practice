@@ -11,6 +11,14 @@ import { HiraganaComponent } from './pages/hiragana/hiragana.component';
 import { KatakanaComponent } from './pages/katakana/katakana.component';
 
 import { KanaTableComponent } from './components/kana-table/kana-table.component';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import {
+    getAnalytics,
+    provideAnalytics,
+    ScreenTrackingService,
+} from '@angular/fire/analytics';
+
+import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: [
@@ -21,12 +29,12 @@ import { KanaTableComponent } from './components/kana-table/kana-table.component
         KatakanaComponent,
         KanaTableComponent,
     ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule
+    imports: [BrowserModule, AppRoutingModule, FormsModule],
+    providers: [
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideAnalytics(() => getAnalytics()),
+        ScreenTrackingService,
     ],
-    providers: [],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
