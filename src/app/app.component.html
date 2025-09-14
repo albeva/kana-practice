@@ -25,9 +25,9 @@
                             <i class="bi {{ icons[theme] }}"></i> Theme
                         </button>
                         <ul id="theme-menu" class="dropdown-menu dropdown-menu-end" aria-labelledby="themeDropdown">
-                            <li><button class="dropdown-item" [class.active]="theme == 'auto'" (click)="setTheme('auto')"><i class="bi {{ icons['auto'] }}"></i> Auto</button></li>
-                            <li><button class="dropdown-item" [class.active]="theme == 'light'" (click)="setTheme('light')"><i class="bi {{ icons['light'] }}"></i> Light</button></li>
-                            <li><button class="dropdown-item" [class.active]="theme == 'dark'" (click)="setTheme('dark')"><i class="bi {{ icons['dark'] }}"></i> Dark</button></li>
+                            <li><button class="dropdown-item" [class.active]="theme == 'auto'" (click)="setTheme('auto')"><i class="bi {{ icons.auto }}"></i> Auto</button></li>
+                            <li><button class="dropdown-item" [class.active]="theme == 'light'" (click)="setTheme('light')"><i class="bi {{ icons.light }}"></i> Light</button></li>
+                            <li><button class="dropdown-item" [class.active]="theme == 'dark'" (click)="setTheme('dark')"><i class="bi {{ icons.dark }}"></i> Dark</button></li>
                         </ul>
                     </li>
                     <li class="nav-item">
