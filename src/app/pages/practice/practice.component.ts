@@ -47,27 +47,27 @@ const KEY_BEST_SCORE = 'bestScore';
     standalone: false,
 })
 export class PracticeComponent {
-    // The input element for typing guesses.
+    // Text input element.
     @ViewChild('guessInput', { static: true }) guessInputEl!: ElementRef;
 
-    // The route parameters.
-    modeParams = input<string>('', { alias: 'mode' });
-    readParams = input<string>('', { alias: 'read' });
+    // Route parameters.
+    modeParams = input('', { alias: 'mode' });
+    readParams = input('', { alias: 'read' });
 
-    // The current guessing mode and character sets.
+    // Current guessing mode and character sets.
     read!: CharacterSet[];
     modes!: Mode[];
     game!: PracticeRound;
     previous?: string;
 
-    // The current state of the guess.
+    // Current state of the guess.
     input = '';
     invalid = false;
     disabled = false;
     failed = false;
     success = false;
 
-    // The score statistics.
+    // Score statistics.
     failures = 0;
     successes = 0;
     best = 0;
