@@ -6,7 +6,7 @@ export interface KanaTableTemplate {
     name: string;
     cols: string[];
     rows: string[];
-    map: any;
+    map: Record<string, string>;
 }
 
 @Component({
@@ -47,7 +47,7 @@ export class KanaTableComponent {
     private find(col: string, row: string): number | undefined {
         let romaji = row + col;
         if (romaji in this.template.map) {
-            romaji = (this.template.map as any)[romaji] as string;
+            romaji = this.template.map[romaji];
         }
         const idx = ROMAJI.indexOf(romaji);
         if (idx === -1) {

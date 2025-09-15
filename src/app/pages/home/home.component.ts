@@ -8,8 +8,6 @@ interface State {
     katakana: boolean;
 }
 
-const FORM_KEY = 'practice_form';
-
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
@@ -17,6 +15,8 @@ const FORM_KEY = 'practice_form';
     standalone: false,
 })
 export class HomeComponent {
+    private static readonly FORM_KEY = 'practice_form';
+
     state: State;
 
     constructor(private router: Router) {
@@ -33,20 +33,20 @@ export class HomeComponent {
             return;
         }
 
-        const params = (...keys: (keyof State)[]): string => {
+        const get = (...keys: (keyof State)[]): string => {
             return keys.filter((k) => this.state[k]).join(',');
         };
 
         this.router.navigate([
             '/practice',
-            params('kana', 'words'),
-            params('hiragana', 'katakana'),
+            get('kana', 'words'),
+            get('hiragana', 'katakana'),
         ]);
     }
 
     toggle(key: keyof State) {
         this.state[key] = !this.state[key];
-        localStorage.setItem(FORM_KEY, JSON.stringify(this.state));
+        localStorage.setItem(HomeComponent.FORM_KEY, JSON.stringify(this.state));
     }
 
     isValid(): boolean {
@@ -57,7 +57,7 @@ export class HomeComponent {
     }
 
     private getSavedState(): State | undefined {
-        let existing = localStorage.getItem(FORM_KEY);
+        let existing = localStorage.getItem(HomeComponent.FORM_KEY);
         return existing !== null ? JSON.parse(existing) : undefined;
     }
 }
