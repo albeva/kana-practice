@@ -9,16 +9,15 @@ type Theme = 'light' | 'dark' | 'auto';
     standalone: false,
 })
 export class AppComponent {
-    title = 'kana-practice';
-
     private static readonly THEME_KEY = 'theme';
 
-    theme: Theme = 'auto';
     readonly icons = {
         auto: 'bi-circle-half',
         light: 'bi-brightness-high',
         dark: 'bi-moon',
     };
+
+    theme: Theme = 'auto';
 
     private readonly mediaQuery = window.matchMedia(
         '(prefers-color-scheme: dark)'
