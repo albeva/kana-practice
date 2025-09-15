@@ -241,25 +241,17 @@ export class PracticeComponent {
             while (true) {
                 let nch = nextCh();
                 if (COMBO.indexOf(nch) !== -1) {
-                    pos += 1;
                     ch += nch;
-                    guess += nch;
-                    continue;
-                }
-                if (ch === 'っ' || ch === 'ッ') {
-                    pos += 1;
+                } else if (ch === 'っ' || ch === 'ッ') {
                     ch = nch;
                     prefix = true;
-                    guess += nch;
-                    continue;
-                }
-                if (nch === 'ー') {
-                    pos += 1;
+                } else if (nch === 'ー') {
                     suffix = true;
-                    guess += nch;
-                    continue;
+                } else {
+                    break;
                 }
-                break;
+                pos += 1;
+                guess += nch;
             }
 
             const idx = set.indexOf(ch);
